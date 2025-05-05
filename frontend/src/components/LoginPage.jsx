@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import UserContext from '../userContext';
+import UserContext from '../UserContext';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
