@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Perks from '../Perks';
 import axios from 'axios';
-import PhotosUploader from '../photosUploader';
+import PhotosUploader from '../PhotosUploader';
 import AccountNav from '../AccountNav';
 import { Navigate, useParams } from 'react-router-dom';
 
