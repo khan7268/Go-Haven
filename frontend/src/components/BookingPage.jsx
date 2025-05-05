@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import AddressLink from '../AddressLink';
 import PlaceGallery from '../PlaceGallery';
 import BookingDates from '../BookingDates';
-import UserContext from '../userContext';
+import UserContext from '../UserContext';
 
 function BookingPage() {
   const { id } = useParams();
