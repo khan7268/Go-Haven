@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "axios": "^1.8.3"
-  },
   {
   "name": "airbnb",
   "private": true,
