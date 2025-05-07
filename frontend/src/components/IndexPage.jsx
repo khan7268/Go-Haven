@@ -19,7 +19,7 @@ function IndexPage() {
               {place.photos?.[0] && (
                 <img
                   className="rounded-2xl object-cover aspect-square"
-                  src={"https://airbnb-mern-sibb.onrender.com/uploads/" + place.photos?.[0]}
+                  src={"https://go-haven.onrender.com/uploads/" + place.photos?.[0]}
                   alt=""
                 />
               )}
