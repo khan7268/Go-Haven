@@ -7,7 +7,7 @@ function PlaceImg({place,className,index=0}) {
     if(!className) {
         className = 'object-cover';
     }
-   const backendBaseURL = 'https://airbnb-mern-sibb.onrender.com';
+   const backendBaseURL = 'https://go-haven.onrender.com';
   return (
         <img className={className} src={`${backendBaseURL}/uploads/${place.photos[index]}`} alt='' />
   )
