@@ -3,7 +3,7 @@ import React from 'react';
 const reviews = [
   {
     name: "Saakshi",
-    years: "6 years on Airbnb",
+    years: "6 years on GoHaven",
     daysAgo: "2 days ago",
     rating: 4,
     review: "Great place to stay",
@@ -11,7 +11,7 @@ const reviews = [
   },
   {
     name: "Prateek",
-    years: "8 years on Airbnb",
+    years: "8 years on GoHaven",
     daysAgo: "4 days ago",
     rating: 5,
     review: "Spacious, cozy, and a beautiful place. I would recommend this to people.",
@@ -19,7 +19,7 @@ const reviews = [
   },
   {
     name: "Paras",
-    years: "2 years on Airbnb",
+    years: "2 years on GoHaven",
     daysAgo: "2 weeks ago",
     rating: 5,
     review: "Great place to stay",
@@ -27,7 +27,7 @@ const reviews = [
   },
   {
     name: "Naina",
-    years: "2 years on Airbnb",
+    years: "2 years on GoHaven",
     daysAgo: "3 weeks ago",
     rating: 3,
     review: "The location was good, and the check-in process was smooth. However, based on my hygiene standards, this place didn't meet my expectations. Although the photos made it appear ...",
@@ -35,7 +35,7 @@ const reviews = [
   },
   {
     name: "Joshin",
-    years: "8 years on Airbnb",
+    years: "8 years on GoHaven",
     daysAgo: "March 2025",
     rating: 4,
     review: "nice place.. amazing people.",
@@ -43,7 +43,7 @@ const reviews = [
   },
   {
     name: "Ankur",
-    years: "10 months on Airbnb",
+    years: "10 months on GoHaven",
     daysAgo: "March 2025",
     rating: 5,
     review: "nice place",
