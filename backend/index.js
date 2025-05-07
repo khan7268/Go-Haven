@@ -24,7 +24,7 @@ const frontendUrl = process.env.NODE_ENV === 'production'
 app.use(cors(
   {
     credentials: true,
-    origin: 'frontendUrl'
+    origin: frontendUrl
   }
 ))
 app.use(express.json());
