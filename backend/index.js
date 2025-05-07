@@ -21,7 +21,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use(cors(
   {
     credentials: true,
-    origin: 'http://localhost:5173'
+    origin: 'https://go-haven-1.onrender.com'
   }
 ))
 app.use(express.json());
@@ -293,6 +293,6 @@ app.get('/bookings', async (req,res) => {
 })
 
 
-app.listen(port,'0.0.0.0',  () => {
+app.listen(port,  () => {
   console.log(`Example app listening on port ${port}`)
 })
