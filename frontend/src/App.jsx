@@ -14,7 +14,7 @@ import PlacePage from './components/PlacePage';
 import BookingsPage from './components/BookingsPage';
 import BookingPage from './components/BookingPage';
 
-axios.defaults.baseURL = 'https://airbnb-mern-sibb.onrender.com';
+axios.defaults.baseURL = 'http://airbnb-mern-sibb.onrender.com';
 axios.defaults.withCredentials = true;
 
 function App() {
