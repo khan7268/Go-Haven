@@ -18,10 +18,13 @@ const multer = require('multer');
 const fs = require('fs');
 
 app.use('/uploads', express.static(__dirname + '/uploads'))
+const frontendUrl = process.env.NODE_ENV === 'production'
+  ? 'https://go-haven-1.onrender.com'
+  : 'http://localhost:5173';
 app.use(cors(
   {
     credentials: true,
-    origin: 'https://go-haven-1.onrender.com'
+    origin: 'frontendUrl'
   }
 ))
 app.use(express.json());
