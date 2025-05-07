@@ -78,7 +78,7 @@ function BookingPage() {
 
                             <div className="text-center text-lg font-semibold">
                                 <div>One of the most loved homes on</div>
-                                <div>Airbnb</div>
+                                <div>GoHaven</div>
                             </div>
                             <div className='text-center text-lg font-semibold'>
                                 <h2>4.9</h2>
