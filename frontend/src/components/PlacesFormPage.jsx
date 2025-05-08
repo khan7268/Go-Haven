@@ -146,7 +146,7 @@ function PlacesFormPage() {
                 </div>
 
                 <div>
-                    <button className='primary my-4'>Save</button>
+                    <button className='primary my-4 cursor-pointer'>Save</button>
                 </div>
 
             </form>
