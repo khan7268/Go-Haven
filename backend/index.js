@@ -191,24 +191,51 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req, res) => {
 });
 
 //API for redirecting to the accomodation page after adding the place to see his listing places
-app.post('/places', (req, res) => {
-  const { title, address, addedPhotos,
+// app.post('/places', (req, res) => {
+//   const { title, address, addedPhotos,
+//     perks, description, extraInfo,
+//     checkIn, checkOut, maxGuests, price } = req.body;
+//   const { token } = req.cookies;
+//   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+//     if (err) {
+//       return res.status(401).json({ error: "Invalid token" }); // Handle invalid token
+//     }
+//     const placeDoc = await Place.create({
+//       owner: userData.id,
+//       title, address, photos: addedPhotos,
+//       perks, description, extraInfo,
+//       checkIn, checkOut, maxGuests, price
+//     })
+//     res.json(placeDoc);
+//   });
+// })
+
+app.post('/places', async (req, res) => {
+  const {
+    title, address, addedPhotos,
     perks, description, extraInfo,
-    checkIn, checkOut, maxGuests, price } = req.body;
+    checkIn, checkOut, maxGuests, price
+  } = req.body;
+
   const { token } = req.cookies;
-  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    if (err) {
-      return res.status(401).json({ error: "Invalid token" }); // Handle invalid token
-    }
+
+  try {
+    const userData = jwt.verify(token, jwtSecret); // Verify token
+
     const placeDoc = await Place.create({
       owner: userData.id,
       title, address, photos: addedPhotos,
       perks, description, extraInfo,
       checkIn, checkOut, maxGuests, price
-    })
-    res.json(placeDoc);
-  });
-})
+    });
+
+    res.json(placeDoc); // Respond with created place
+  } catch (err) {
+    console.error("Error in /places route:", err);
+    res.status(500).json({ error: "Failed to create place" });
+  }
+});
+
 
 //API for getting and listing the places of the user
 app.get('/user-places', (req, res) => {
