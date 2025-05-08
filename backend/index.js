@@ -22,12 +22,26 @@ const allowedOrigins = [
   'http://localhost:5173',
   'https://go-haven-1.onrender.com'
 ];
-app.use(cors(
-  {
-    credentials: true,
-    origin: allowedOrigins
+// app.use(cors(
+//   {
+//     credentials: true,
+//     origin: allowedOrigins
+//   }
+// ))
+
+const corsOptions = {
+  credentials: true,  // Allow cookies to be sent with requests
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS policy: Not allowed'), false);
+    }
   }
-))
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
