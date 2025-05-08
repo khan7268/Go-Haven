@@ -50,14 +50,14 @@ app.get('/test', (req, res) => {
 app.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    // if (!name || !email || !password) {
-    //   return res.status(422).json({ error: "All fields are required" });
-    // }
+    if (!name || !email || !password) {
+      return res.status(422).json({ error: "All fields are required" });
+    }
 
-    // const existingUser = await User.findOne({ email });
-    // if (existingUser) {
-    //   return res.status(422).json({ error: "Email already exists" });
-    // }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(422).json({ error: "Email already exists" });
+    }
     const salt = bcrypt.genSaltSync(10);
     const user = await User.create({
       name,
@@ -81,8 +81,8 @@ app.post('/login', async (req, res) => {
     if (pass) {
       jwt.sign({ email: user.email, id: user._id, name: user.name }, jwtSecret, {}, (err, token) => {
         if (err) throw err;
-        res.cookie('token', token).json(user);
-      });
+       res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None'}).json(user);
+        });
     }
     else {
       res.json("Password not Ok");
