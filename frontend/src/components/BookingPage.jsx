@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 import { Navigate, useParams } from 'react-router-dom'
 import AddressLink from '../AddressLink';
 import PlaceGallery from '../PlaceGallery';
