@@ -9,7 +9,7 @@ function PlaceImg({place,className,index=0}) {
     }
    const backendBaseURL = 'https://go-haven.onrender.com';
   return (
-        <img className={className} src={`${backendBaseURL}/uploads/${place.photos[index]}`} alt='' />
+        <img className={`w-full h-full object-cover rounded-xl ${className}`} src={`${backendBaseURL}/uploads/${place.photos[index]}`} alt='' />
   )
 }
 
