@@ -211,28 +211,78 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req, res) => {
 // })
 
 app.post('/places', async (req, res) => {
-  const {
-    title, address, addedPhotos,
-    perks, description, extraInfo,
-    checkIn, checkOut, maxGuests, price
-  } = req.body;
+  // const {
+  //   title, address, addedPhotos,
+  //   perks, description, extraInfo,
+  //   checkIn, checkOut, maxGuests, price
+  // } = req.body;
 
-  const { token } = req.cookies;
+  // const { token } = req.cookies;
 
-  try {
-    const userData = jwt.verify(token, jwtSecret); // Verify token
+  // try {
+  //   const userData = jwt.verify(token, jwtSecret); // Verify token
 
+  //   const placeDoc = await Place.create({
+  //     owner: userData.id,
+  //     title, address, photos: addedPhotos,
+  //     perks, description, extraInfo,
+  //     checkIn, checkOut, maxGuests, price
+  //   });
+
+  //   res.json(placeDoc); // Respond with created place
+  // } catch (err) {
+  //   console.error("Error in /places route:", err);
+  //   res.status(500).json({ error: "Failed to create place" });
+  // }
+   try {
+    // Destructure request body
+    const {
+      title,
+      address,
+      addedPhotos,
+      perks,
+      description,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price
+    } = req.body;
+
+    // Check for token in cookies
+    const { token } = req.cookies;
+    if (!token) {
+      return res.status(401).json({ error: 'Authentication token missing' });
+    }
+
+    // Verify token
+    let userData;
+    try {
+      userData = jwt.verify(token, jwtSecret);
+    } catch (err) {
+      return res.status(401).json({ error: 'Invalid or expired token' });
+    }
+
+    // Create new place document
     const placeDoc = await Place.create({
       owner: userData.id,
-      title, address, photos: addedPhotos,
-      perks, description, extraInfo,
-      checkIn, checkOut, maxGuests, price
+      title,
+      address,
+      photos: addedPhotos,
+      perks,
+      description,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price
     });
 
-    res.json(placeDoc); // Respond with created place
+    // Send created document as response
+    res.status(201).json(placeDoc);
   } catch (err) {
-    console.error("Error in /places route:", err);
-    res.status(500).json({ error: "Failed to create place" });
+    console.error('Error in /places route:', err);
+    res.status(500).json({ error: 'Failed to create place', message: err.message });
   }
 });
 
