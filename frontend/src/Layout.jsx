@@ -13,12 +13,6 @@ function Layout() {
     <div className='py-4 px-8 flex flex-col min-h-screen'>
       <Header/>
       <Outlet/>
-      {!isAuthPage && (
-        <>
-          <ExploreSection />
-          <Footer />
-        </>
-      )}
     </div>
   )
 }
