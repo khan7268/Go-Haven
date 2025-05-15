@@ -388,6 +388,81 @@ app.get('/bookings', async (req,res) => {
 })
 
 
+// Middleware to verify JWT and attach user to request
+const authenticateUser = (req, res, next) => {
+  const token = req.cookies?.token;
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { _id: decoded.id }; // ✅ FIX
+    console.log("Authenticated user ID:", req.user._id);
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: 'Forbidden: Invalid token' });
+  }
+};
+
+
+// Delete booking by ID
+
+app.delete('/bookings/:id', authenticateUser, async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid booking ID' });
+  }
+
+  try {
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    // Check if the logged-in user is the one who made the booking
+    if (booking.user.toString() !== req.user._id) {
+      return res.status(403).json({ message: 'Forbidden: You can only cancel your own bookings' });
+    }
+
+    await booking.deleteOne(); // or Booking.findByIdAndDelete(id)
+    res.status(200).json({ message: 'Booking cancelled successfully' });
+  } catch (error) {
+    console.error('Error cancelling booking:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+//API for deleting accomodations
+app.delete('/user-places/:id', authenticateUser, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+  try {
+    const place = await Place.findById(id);
+    if (!place) {
+      return res.status(404).json({ message: 'Place not found' });
+    }
+
+    if (place.owner.toString() !== userId) {
+      return res.status(403).json({ message: 'Forbidden: Not the owner of this place' });
+    }
+
+    await Place.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Place deleted successfully' });
+
+  } catch (err) {
+    console.error('Delete failed:', err);
+    res.status(500).json({ message: 'Server error while deleting place' });
+  }
+});
+
+
+
+
 app.listen(port,  () => {
   console.log(`Example app listening on port ${port}`)
 })
