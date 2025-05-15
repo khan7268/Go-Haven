@@ -4,7 +4,7 @@ import UserContext from '../UserContext'
 
 function Header() {
   const { user } = useContext(UserContext);
-  return (
+  //inside the return 
    {/*  <div>
        <div>
         <header className=' flex justify-between'>
@@ -42,7 +42,7 @@ function Header() {
         </header>
       </div>
     </div> */}
-
+  return (
     <div className="w-full shadow-md bg-white">
       <header className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 md:px-8">
         {/* Logo (Left) */}
