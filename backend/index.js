@@ -401,6 +401,8 @@ const authenticateUser = (req, res, next) => {
     const decoded = jwt.verify(token,jwtSecret);
     req.user = { _id: decoded.id }; // ✅ FIX
     console.log("Authenticated user ID:", req.user._id);
+    const decoded = jwt.decode(token);
+console.log("Decoded token:", decoded);
     next();
   } catch (err) {
     return res.status(403).json({ message: 'Forbidden: Invalid token' });
