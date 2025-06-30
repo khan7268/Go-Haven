@@ -137,9 +137,7 @@ function PlacePage() {
     const [place, setPlace] = useState(null);
 
     useEffect(() => {
-
         if (!id) return;
-
         axios.get(`/places/${id}`).then(response => {
             setPlace(response.data);
         })
@@ -148,26 +146,26 @@ function PlacePage() {
     if (!place) return '';
 
     return (
-        <div className='mt-6 bg-gray-100 -mx-8 p-6'>
-            <div className='mx-50'>
-                <h1 className='text-3xl '>{place.title}</h1>
-               <AddressLink>{place.address}</AddressLink>
-                <PlaceGallery place={place}/>
-                <div className='relative mt-8 gap-9 grid grid-cols-1 md:grid-cols-[2fr_1fr]'>
+        <div className='mt-6 bg-gray-100 p-4'> {/* Adjusted padding for smaller screens */}
+            <div className='mx-auto max-w-7xl'> {/* Added max-width for larger screens */}
+                <h1 className='text-3xl font-bold mb-2'>{place.title}</h1> {/* Added mb-2 for spacing */}
+                <AddressLink>{place.address}</AddressLink>
+                <PlaceGallery place={place} />
+                <div className='relative mt-8 gap-9 grid grid-cols-1 md:grid-cols-[2fr_1fr]'>  {/* grid-cols-1 on small, md:grid-cols on larger */}
                     <div>
-                        <h1 className='text-2xl font-semibold'> Room in {place.address}</h1>
-                        <p className='text-lg'>{place.maxGuests} beds. Dedicated Bathroom </p>
+                        <h1 className='text-2xl font-semibold mb-2'> Room in {place.address}</h1> {/* Added mb-2 */}
+                        <p className='text-lg mb-4'>{place.maxGuests} beds. Dedicated Bathroom </p> {/* Added mb-4 */}
 
-                        <div className="border border-gray-800 rounded-2xl my-6 px-4 py-4 grid grid-cols-[1fr_2fr_0.7fr] items-center gap-4">
-                            <div className="flex flex-col items-center justify-center text-lg font-semibold text-center space-y-1">
-                                <div className="flex items-center justify-center">
+                        <div className="border border-gray-200 rounded-2xl my-6 p-4 bg-white shadow-md">
+                            <div className="flex flex-col md:flex-row items-center justify-around text-lg font-semibold text-center space-y-4 md:space-y-0 md:space-x-8">
+                                <div className="flex flex-col items-center justify-center">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         strokeWidth="1.5"
                                         stroke="currentColor"
-                                        className="w-6 h-6"
+                                        className="w-6 h-6 text-[#F5385D]"
                                     >
                                         <path
                                             strokeLinecap="round"
@@ -176,72 +174,62 @@ function PlacePage() {
                                         />
                                     </svg>
                                     <div className='ml-3'>
-                                        <div>Guest</div>
-                                        <div>Favourite</div>
+                                        <div className="text-gray-700">Guest</div>
+                                        <div className="text-gray-700">Favourite</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="text-gray-700">One of the most loved homes on</div>
+                                    <div className="text-[#F5385D] font-bold">GoHaven</div>
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold text-[#F5385D]">4.9</h2>
+                                    <div className='flex'>
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4 text-yellow-500">
+                                                <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
+                                            </svg>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="text-center text-lg font-semibold">
-                                <div>One of the most loved homes on</div>
-                                <div>GoHaven</div>
-                            </div>
-                            <div className='text-center text-lg font-semibold'>
-                                <h2>4.9</h2>
-                                <div className='grid grid-cols-5 '>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-3">
-                                        <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-3">
-                                        <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-3">
-                                        <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-3">
-                                        <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
-                                    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-3">
-                                        <path fillRule="evenodd" d="M8 1.75a.75.75 0 0 1 .692.462l1.41 3.393 3.664.293a.75.75 0 0 1 .428 1.317l-2.791 2.39.853 3.575a.75.75 0 0 1-1.12.814L7.998 12.08l-3.135 1.915a.75.75 0 0 1-1.12-.814l.852-3.574-2.79-2.39a.75.75 0 0 1 .427-1.318l3.663-.293 1.41-3.393A.75.75 0 0 1 8 1.75Z" clipRule="evenodd" />
-                                    </svg>
-
-                                </div>
-                            </div>
                         </div>
-                        <hr className='border-gray-400' />
+                        <hr className='border-gray-400 my-6' />
 
                         <div className='my-4'>
                             <h2 className='text-2xl font-semibold mb-2'>About this place</h2>
-                            {place.description}
+                            <p className='text-gray-700 leading-relaxed'>{place.description}</p>
                         </div>
-                        <div>
-                            Check-in: {place.checkIn} <br />
-                            Check-out: {place.checkOut} <br />
-                            Maximum Guests: {place.maxGuests}
+                        <div className="text-gray-700">
+                            <p><span className="font-semibold">Check-in:</span> {place.checkIn}</p>
+                            <p><span className="font-semibold">Check-out:</span> {place.checkOut}</p>
+                            <p><span className="font-semibold">Maximum Guests:</span> {place.maxGuests}</p>
                         </div>
 
                         <div className='mt-4'>
                             <h2 className='text-2xl font-semibold mb-2'>Extra Information</h2>
-                            <div className='text-sm text-gray-700 leading-4'>{place.extraInfo}</div>
+                            <div className='text-sm text-gray-700 leading-relaxed'>{place.extraInfo}</div>
                         </div>
-                        <hr className='border-gray-400 mt-4' />
-                        <div className='my-3'>
-                            <PerksDisplay place={place}/>
+                        <hr className='border-gray-400 mt-6' />
+                        <div className='my-6'>
+                            <PerksDisplay place={place} />
                         </div>
 
                     </div>
-                    <div className='sticky top-24 self-start'>
+                    <div className='sticky top-24 self-start max-w-full md:max-w-[400px]'>
                         <BookingWidget place={place} />
                     </div>
                 </div>
             </div>
-            <hr className='border-gray-400 mt-20' />
-            <Ratings/>
+            <hr className='border-gray-400 mt-12' />
+            <Ratings />
             {/* <LocationMap>{place.address}</LocationMap> */}
-            <ExploreSection/>
-            <Footer/>
-
+            <ExploreSection />
+            <Footer />
         </div>
     )
 }
 
 export default PlacePage
+
