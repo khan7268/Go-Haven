@@ -423,6 +423,8 @@ app.delete('/bookings/:id', authenticateUser, async (req, res) => {
     }
 
     // Check if the logged-in user is the one who made the booking
+    console.log("Booking user:", booking.user.toString());
+console.log("Logged-in user:", req.user._id);
     if (booking.user.toString() !== req.user._id) {
       return res.status(403).json({ message: 'Forbidden: You can only cancel your own bookings' });
     }
