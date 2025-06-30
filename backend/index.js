@@ -382,11 +382,12 @@ app.post('/bookings', async (req, res) => {
 });
 
 //API for accessing the list of user booking
-app.get('/bookings', async (req,res) => {
- const userData = await getUserDataFromReq(req);
- res.json(await Booking.find({user:userData.id}).populate('place'));
+app.get('/bookings', async (req, res) => {
+  const userData = await getUserDataFromReq(req);
+  res.json(await Booking.find({ user: userData.id }).populate('place'));
 })
 
+// Delete booking by ID
 
 // Middleware to verify JWT and attach user to request
 const authenticateUser = (req, res, next) => {
@@ -406,8 +407,6 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-
-// Delete booking by ID
 
 app.delete('/bookings/:id', authenticateUser, async (req, res) => {
   const { id } = req.params;
@@ -453,13 +452,12 @@ app.delete('/user-places/:id', authenticateUser, async (req, res) => {
 
     await Place.findByIdAndDelete(id);
     res.status(200).json({ message: 'Place deleted successfully' });
-
+    
   } catch (err) {
     console.error('Delete failed:', err);
     res.status(500).json({ message: 'Server error while deleting place' });
   }
 });
-
 
 
 
