@@ -87,49 +87,58 @@ app.post('/register', async (req, res) => {
 
 
 //API for login the user
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    const pass = bcrypt.compareSync(password, user.password);
-    if (pass) {
-      jwt.sign({ email: user.email, id: user._id, name: user.name }, jwtSecret, {}, (err, token) => {
-        if (err) throw err;
-       res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None'}).json(user);
-        });
-    }
-    else {
-      res.json("Password not Ok");
-    }
-  }
-  else {
-    res.json("Not found")
-  }
-})
-
-//Another way for login end point
 // app.post('/login', async (req, res) => {
 //   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
+//   const user = await User.findOne({ email });
+//   if (user) {
+//     const pass = bcrypt.compareSync(password, user.password);
+//     if (pass) {
+//       jwt.sign({ email: user.email, id: user._id, name: user.name }, jwtSecret, {}, (err, token) => {
+//         if (err) throw err;
+//        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None'}).json(user);
+//         });
 //     }
-
-//     const isPasswordValid = bcrypt.compareSync(password, user.password);
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ error: "Invalid credentials" });
+//     else {
+//       res.json("Password not Ok");
 //     }
-
-//     // Generate JWT token
-//     const token = jwt.sign({ userId: user._id, email: user.email }, jwtSecret, { expiresIn: '1h' });
-
-//     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
-//   } catch (error) {
-//     res.status(500).json({ error: "Something went wrong" });
 //   }
-// });
+//   else {
+//     res.json("Not found")
+//   }
+// })
+
+//Another way for login end point
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Generate JWT token
+    jwt.sign({ email: user.email, id: user._id, name: user.name }, jwtSecret, { expiresIn: '30d' }, (err, token) => {
+      if (err) throw err;
+      res.cookie('token', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false, // Set to true in production with HTTPS
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+      }).json(user);
+    });
+    // const token = jwt.sign({ userId: user._id, email: user.email }, jwtSecret, { expiresIn: '1h' });
+
+    // res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
 
 
 //API for viewing the profile of the user by verifying the token 
@@ -466,3 +475,4 @@ app.delete('/user-places/:id', authenticateUser, async (req, res) => {
 app.listen(port,  () => {
   console.log(`Example app listening on port ${port}`)
 })
+
