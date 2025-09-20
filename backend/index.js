@@ -18,16 +18,32 @@ const multer = require('multer');
 const fs = require('fs');
 
 app.use('/uploads', express.static(__dirname + '/uploads'))
+// const allowedOrigins = [
+//   'http://localhost:5173',
+//   'https://go-haven-1.onrender.com'
+// ];
+// app.use(cors(
+//   {
+//     credentials: true,
+//     origin: allowedOrigins
+//   }
+// ))
+
 const allowedOrigins = [
   'http://localhost:5173',
   'https://go-haven-1.onrender.com'
 ];
-app.use(cors(
-  {
-    credentials: true,
-    origin: allowedOrigins
-  }
-))
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 
 // const corsOptions = {
 //   credentials: true,  // Allow cookies to be sent with requests
@@ -475,4 +491,5 @@ app.delete('/user-places/:id', authenticateUser, async (req, res) => {
 app.listen(port,  () => {
   console.log(`Example app listening on port ${port}`)
 })
+
 
