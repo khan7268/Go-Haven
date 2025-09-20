@@ -18,18 +18,20 @@ export function UserContextProvider({children}) {
 
 useEffect(() => {
   axios
-    .get("/profile", { withCredentials: true }) // Ensure credentials are included
+    .get("/profile", { withCredentials: true })
     .then(({ data }) => {
       if (data) {
-        setUser(data); // Store user data
+        setUser(data);
       }
-      setReady(true);
     })
     .catch((error) => {
       console.error("Error fetching user:", error);
-      setUser(null); // Ensure state remains consistent
+      setUser(null);
+    })
+    .finally(() => {
+      setReady(true);
     });
-}, []); 
+}, []);
     return (
         <UserContext.Provider value={{user,setUser,ready}}>
                  {children}
@@ -37,3 +39,4 @@ useEffect(() => {
     )
 }
 export default UserContext;
+
